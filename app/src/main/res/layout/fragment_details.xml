@@ -1,0 +1,207 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="reviewItem"
+            type="com.getyourguide.challenge.vo.Review" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/list_item_comments_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/photo"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:background="#0f0"
+                android:backgroundTint="#f7f7f7"
+                android:scaleType="fitCenter"
+                app:imageFromUrl="@{reviewItem.author.photo}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <LinearLayout
+                android:id="@+id/rating_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/enjoyment">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <RatingBar
+                        android:id="@+id/rating"
+                        style="@style/Widget.AppCompat.RatingBar.Small"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:isIndicator="true"
+                        android:max="5"
+                        android:maxHeight="19dp"
+                        android:minHeight="19dp"
+                        android:numStars="5"
+                        android:rating="@{reviewItem.rating}"
+                        android:stepSize="0.5"
+                        tools:ignore="RtlHardcoded" />
+
+                    <TextView
+                        android:id="@+id/rating_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#555555"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toEndOf="@id/rating"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/fullName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#5500141b"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="1"
+                android:padding="2dp"
+                android:text="@{reviewItem.author.fullName}"
+                android:textColor="#fff"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/photo"
+                app:visible="@{reviewItem.author.fullName}" />
+
+            <TextView
+                android:id="@+id/country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#5557b0cd"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="1"
+                android:padding="2dp"
+                android:text="@{@string/country(reviewItem.author.country,reviewItem.language)}"
+                android:textColor="#515151"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fullName"
+                app:visible="@{reviewItem.author.country}" />
+
+            <TextView
+                android:id="@+id/travelerType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#55a8dcf3"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="1"
+                android:maxLines="1"
+                android:padding="2dp"
+                android:text="@{@string/travelerType(reviewItem.travelerType)}"
+                android:textColor="#515151"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/country"
+                app:visible="@{reviewItem.travelerType}" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="5dp"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:maxLength="100"
+                android:text="@{reviewItem.title}"
+                android:textColor="#aa3fff"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/travelerType"
+                app:visible="@{reviewItem.title}" />
+
+            <TextView
+                android:id="@+id/enjoyment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="5dp"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:maxLength="100"
+                android:text="@{reviewItem.enjoyment}"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                app:visible="@{reviewItem.enjoyment}" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/fragment_details_message_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/created_date"
+            app:layout_constraintTop_toBottomOf="@id/list_item_comments_header">
+
+            <TextView
+                android:id="@+id/message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:padding="4dp"
+                android:text="@{reviewItem.message}"
+                android:textColor="#555555"
+                android:textSize="14sp" />
+        </androidx.core.widget.NestedScrollView>
+
+        <TextView
+            android:id="@+id/created_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginEnd="4dp"
+            android:text="@{reviewItem.created}"
+            android:textColor="#a7a7a7"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
