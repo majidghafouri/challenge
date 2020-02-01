@@ -32,7 +32,8 @@ import java.util.concurrent.Executor
  */
 class PageKeyedReviewDataSource(
     private val reviewApi: ReviewApi,
-    private val retryExecutor: Executor
+    private val retryExecutor: Executor,
+    private val sort: String
 ) : PageKeyedDataSource<Int, Review>() {
 
     // keep a function reference for the retry event
@@ -69,7 +70,7 @@ class PageKeyedReviewDataSource(
     ) {
         networkState.postValue(NetworkState.LOADING)
         reviewApi.getReviews(
-            sort = "rating:asc",
+            sort = sort,
             offset = params.key,
             limit = params.requestedLoadSize
         )
@@ -118,7 +119,7 @@ class PageKeyedReviewDataSource(
         val request = reviewApi.getReviews(
             limit = 10,
             offset = 0,
-            sort = "rating:asc"
+            sort = sort
         )
         networkState.postValue(NetworkState.LOADING)
         initialLoad.postValue(NetworkState.LOADING)

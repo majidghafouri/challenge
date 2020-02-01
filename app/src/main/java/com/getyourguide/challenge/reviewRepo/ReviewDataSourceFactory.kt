@@ -28,11 +28,12 @@ import java.util.concurrent.Executor
  */
 class ReviewDataSourceFactory(
     private val reviewApi: ReviewApi,
-    private val retryExecutor: Executor
+    private val retryExecutor: Executor,
+    private val sort: String
 ) : DataSource.Factory<Int, Review>() {
     val sourceLiveData = MutableLiveData<PageKeyedReviewDataSource>()
     override fun create(): DataSource<Int, Review> {
-        val source = PageKeyedReviewDataSource(reviewApi, retryExecutor)
+        val source = PageKeyedReviewDataSource(reviewApi, retryExecutor,sort)
         sourceLiveData.postValue(source)
         return source
     }

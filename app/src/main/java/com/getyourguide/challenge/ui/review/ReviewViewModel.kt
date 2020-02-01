@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-package com.getyourguide.challenge.ui
+package com.getyourguide.challenge.ui.review
 
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
-import androidx.lifecycle.switchMap
+import androidx.lifecycle.*
 import com.getyourguide.challenge.reviewRepo.ReviewPostRepository
 
 class ReviewViewModel(
     private val repository: ReviewPostRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+    val data = MutableLiveData<String>()
+
     companion object {
         const val KEY_REVIEW = "KEY"
         const val DEFAULT_REVIEW = "DEFAULT"
@@ -35,9 +34,10 @@ class ReviewViewModel(
         if (!savedStateHandle.contains(KEY_REVIEW)) {
             savedStateHandle.set(KEY_REVIEW, DEFAULT_REVIEW)
         }
+        data.value = "rating:asc"
     }
 
-    private val repoResult = savedStateHandle.getLiveData<String>(KEY_REVIEW).map {
+    private val repoResult = data.map {
         repository.postsOfReview(it, 30)
     }
     val posts = repoResult.switchMap { it.pagedList }
@@ -52,4 +52,13 @@ class ReviewViewModel(
         val listing = repoResult.value
         listing?.retry?.invoke()
     }
+
+    fun onClickAsc() {
+        data.value = "rating:asc"
+    }
+
+    fun onClickDesc() {
+        data.value = "rating:desc"
+    }
+
 }

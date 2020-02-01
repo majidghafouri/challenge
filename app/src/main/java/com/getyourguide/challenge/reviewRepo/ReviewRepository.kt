@@ -33,10 +33,10 @@ class ReviewRepository(
 ) : ReviewPostRepository {
     @MainThread
     override fun postsOfReview(
-        reivewSize: String,
+        sort: String,
         pageSize: Int
     ): Listing<Review> {
-        val sourceFactory = ReviewDataSourceFactory(reviewApi, networkExecutor)
+        val sourceFactory = ReviewDataSourceFactory(reviewApi, networkExecutor,sort)
 
         // We use toLiveData Kotlin extension function here, you could also use LivePagedListBuilder
         val livePagedList = sourceFactory.toLiveData(

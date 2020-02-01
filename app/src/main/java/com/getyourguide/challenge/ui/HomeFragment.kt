@@ -29,12 +29,13 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.getyourguide.challenge.R
 import com.getyourguide.challenge.ServiceLocator
 import com.getyourguide.challenge.adapter.ReviewAdapter
+import com.getyourguide.challenge.databinding.FragmentHomeBinding
 import com.getyourguide.challenge.modules.GlideApp
 import com.getyourguide.challenge.reviewRepo.NetworkState
 import com.getyourguide.challenge.reviewRepo.ReviewPostRepository
+import com.getyourguide.challenge.ui.review.ReviewViewModel
 import com.getyourguide.challenge.vo.Review
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -42,6 +43,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
  * Shows the main title screen.
  */
 class HomeFragment : Fragment() {
+    lateinit var binding: FragmentHomeBinding
     companion object {
         private var fabExpanded = false
     }
@@ -51,10 +53,10 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(
-            R.layout.fragment_home, container, false
-        )
-        return view
+        binding = FragmentHomeBinding.inflate(inflater,container,false).apply {
+            vm = model
+        }
+        return binding.root
     }
 
     override fun onViewCreated(
@@ -76,23 +78,9 @@ class HomeFragment : Fragment() {
                 openSubMenusFab()
             }
         }
-        asc.setOnClickListener { view ->
-            sortAsc()
-            closeSubMenusFab()
-        }
-        desc.setOnClickListener { view ->
-            sortDesc()
-            closeSubMenusFab()
-        }
     }
 
-    private fun sortDesc() {
 
-    }
-
-    private fun sortAsc() {
-
-    }
 
     //closes FAB submenus
     private fun closeSubMenusFab() {
